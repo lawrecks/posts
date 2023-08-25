@@ -59,4 +59,6 @@ router.post(
   commentController.createComment,
 );
 
+router.get('/users/top', verifyToken, userController.getTopThreeUsers);
+
 export default router;

@@ -39,3 +39,15 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
     return next(error);
   }
 };
+
+export const getTopThreeUsers = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await service.getTopThreeUsers();
+
+    return successResponse(res, 'Top users fetched successfully', 200, users);
+  } catch (error) {
+    logger.error('getTopThreeUsers::userController', error);
+
+    return next(error);
+  }
+};
