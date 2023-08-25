@@ -62,3 +62,7 @@ export const login = async ({ email, password }: { email: string; password: stri
 export const getAllUsers = async (): Promise<User[]> => {
   return db.many<User>(userQueries.findAll);
 };
+
+export const getTopThreeUsers = async (): Promise<User[]> => {
+  return db.many<User>(userQueries.getTopThreeUsers);
+};

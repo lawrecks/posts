@@ -6,6 +6,7 @@ import logger from '../config/logger';
 import db from '../db';
 import userQueries from '../db/queries/user.queries';
 import { ApiError } from '../utils/helpers/response.helpers';
+import { RequestWithUser } from '../utils/interfaces';
 
 export const checkIfUserExists = async (
   { body: { email } }: Request,
@@ -45,17 +46,19 @@ export const validateUserId = async (
   }
 };
 
-export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+export const verifyToken = (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
+    let decoded: any;
     const token = req.header('Authorization');
     if (!token) {
       throw ApiError('Access denied, a valid access token is required', 401);
     }
     try {
-      jwt.verify(token, config.JWT_SECRET);
+      decoded = jwt.verify(token, config.JWT_SECRET);
     } catch (e) {
       throw ApiError('Invalid token', 401);
     }
+    req.user = decoded;
 
     return next();
   } catch (error) {

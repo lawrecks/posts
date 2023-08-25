@@ -122,7 +122,9 @@ describe('User', () => {
         .end((req, res) => {
           expect(res.statusCode).to.be.equal(401);
           expect(res.body.code).to.be.equal(401);
-          expect(res.body.message).to.be.equal('Access denied, a valid access token is required');
+          expect(res.body.message).to.be.equal(
+            'Access denied, a valid access token is required',
+          );
           done();
         });
     });
@@ -136,6 +138,19 @@ describe('User', () => {
           expect(res.statusCode).to.be.equal(200);
           expect(res.body.code).to.be.equal(200);
           expect(res.body.message).to.be.equal('Users fetched successfully');
+          done();
+        });
+    });
+
+    it('should get top three users', (done) => {
+      request(app)
+        .get('/api/v1/users/top')
+        .set('Accept', 'application/json')
+        .set('Authorization', `${process.env.USER_TOKEN}`)
+        .end((req, res) => {
+          expect(res.statusCode).to.be.equal(200);
+          expect(res.body.code).to.be.equal(200);
+          expect(res.body.message).to.be.equal('Top users fetched successfully');
           done();
         });
     });

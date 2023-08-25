@@ -10,7 +10,7 @@ export const createPost = async (
   next: NextFunction,
 ) => {
   try {
-    const post = await service.createPost({ ...body, user_id: id });
+    const post = await service.createPost({ ...body, userId: id });
 
     return successResponse(res, 'Post created successfully', 201, post);
   } catch (error) {

@@ -16,9 +16,15 @@ export default {
     user_id,
     title,
     description,
-    content
+    content,
     created_at,
     updated_at
     FROM posts
-    WHERE user_id = $1`,
+    WHERE user_id = $1
+    ORDER BY posts.created_at DESC`,
+
+  findById: `
+    SELECT * FROM posts
+    WHERE posts.id = $1
+  `,
 };

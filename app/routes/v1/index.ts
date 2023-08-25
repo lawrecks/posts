@@ -1,13 +1,16 @@
 import { Router, Request, Response } from 'express';
 
+import * as commentController from '../../controllers/comment.controllers';
 import * as postController from '../../controllers/post.controllers';
 import * as userController from '../../controllers/user.controllers';
+import { validatePostId } from '../../middlewares/post.middleware';
 import {
   checkIfUserExists,
   validateUserId,
   verifyToken,
 } from '../../middlewares/user.middlewares';
 import { validateParamsId } from '../../utils/validators';
+import { validateCreateComment } from '../../utils/validators/comment.validators';
 import { validateCreatePost } from '../../utils/validators/post.validators';
 import {
   validateCreateUser,
@@ -46,5 +49,16 @@ router.get(
   validateUserId,
   postController.getAllPosts,
 );
+
+router.post(
+  '/posts/:postId/comments',
+  verifyToken,
+  validateParamsId('postId'),
+  validateCreateComment,
+  validatePostId,
+  commentController.createComment,
+);
+
+router.get('/users/top', verifyToken, userController.getTopThreeUsers);
 
 export default router;

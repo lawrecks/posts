@@ -1,5 +1,5 @@
 export interface PostCreateDto {
-  user_id: number;
+  userId: number;
   title: string;
   description?: string;
   content: string;

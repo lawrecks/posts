@@ -33,4 +33,12 @@ describe('User controller', () => {
 
     expect(res.status.calledOnce).to.equal(false);
   });
+
+  it('should call getTopThreeUsers function', async () => {
+    const error = new Error('Failed to get top three users');
+    sinon.stub(service, 'getTopThreeUsers').rejects(error);
+    await controller.getTopThreeUsers(req as Request, res as Response, next as NextFunction);
+
+    expect(res.status.calledOnce).to.equal(false);
+  });
 });
