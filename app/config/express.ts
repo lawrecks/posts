@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
 import cors from 'cors';
 import { Request, Response, NextFunction, Express } from 'express';
 
 import logger from './logger';
 import routes from '../routes/v1';
+import { ApiError } from '../utils/helpers/response.helpers';
 
 const expressConfig = (app: Express) => {
   const env = app.get('env');
@@ -41,29 +39,11 @@ const expressConfig = (app: Express) => {
     return next(err);
   });
 
-  // error handlers
-
-  // development error handler
-  // will print stacktrace
-
-  if (app.get('env') === 'development' || app.get('env') === 'test') {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    app.use((err: any, req: Request, res: Response) => {
-      logger.error(err);
-      res.status(err.code || 500).json({
-        status: err.status,
-        code: err.code,
-        message: err.message,
-        data: err.data,
-      });
-    });
-  }
-
-  // production error handler
-  // remove stacktrace
-  app.use((err: any, req: Request, res: Response) =>
-    res.status(err.code || 500).json({ message: err.message }),
-  );
+  // error handler
+  app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    logger.error(err);
+    res.status(err.code || 500).json(ApiError(err.message, err.code));
+  });
 };
 
 export default expressConfig;

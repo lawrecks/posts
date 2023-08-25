@@ -11,6 +11,8 @@ interface Environment {
   HOST: string;
   API_VERSION: string;
   DATABASE_URL: string;
+  JWT_SECRET: string;
+  JWT_EXPIRY: string;
 }
 
 const { PORT, NODE_ENV } = process.env;

@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-export const Error = (message: string, code: number) => ({
+export const ApiError = (message: string, code: number) => ({
   status: 'error',
   message,
   code,
