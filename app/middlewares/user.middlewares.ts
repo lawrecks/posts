@@ -8,12 +8,12 @@ import userQueries from '../db/queries/user.queries';
 import { ApiError } from '../utils/helpers/response.helpers';
 
 export const checkIfUserExists = async (
-  req: Request,
+  { body: { email } }: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const user = await db.oneOrNone(userQueries.findByEmail, req.body.email);
+    const user = await db.oneOrNone(userQueries.findByEmail, email);
     if (user) {
       throw ApiError('User already exists', 400);
     }
@@ -21,6 +21,25 @@ export const checkIfUserExists = async (
     return next();
   } catch (error) {
     logger.error('checkIfUserExists::userMiddleware', error);
+
+    return next(error);
+  }
+};
+
+export const validateUserId = async (
+  { params: { id } }: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const user = await db.oneOrNone(userQueries.findById, id);
+    if (!user) {
+      throw ApiError('User not found', 404);
+    }
+
+    return next();
+  } catch (error) {
+    logger.error('validateUserId::userMiddleware', error);
 
     return next(error);
   }

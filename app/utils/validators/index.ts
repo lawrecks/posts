@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response, NextFunction } from 'express';
+import Joi from 'joi';
 
 import { ApiError } from '../helpers/response.helpers';
 
@@ -28,5 +29,13 @@ const baseValidator = async (
     return next(ApiError(error.message.replace(/["]/gi, ''), 400));
   }
 };
+
+export const validateParamsId =
+  (key: string) => (req: Request, res: Response, next: NextFunction) => {
+    const validationObject: Record<string, any> = {};
+    validationObject[key] = Joi.number().integer();
+    const schema = Joi.object(validationObject);
+    baseValidator(schema, req, res, next, 'params');
+  };
 
 export default baseValidator;

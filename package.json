@@ -21,7 +21,7 @@
     "prestart": "npm run migrate:up",
     "dev": "nodemon app/server.ts",
     "pretest": "cross-env NODE_ENV=test npm run lint && npm run migrate-test:down && npm run migrate-test:up",
-    "test": "cross-env NODE_ENV=test nyc --require ts-node/register --reporter=lcov --reporter=text --reporter=text-summary mocha --exit --recursive --timeout=150000 tests/**/*.ts",
+    "test": "cross-env NODE_ENV=test nyc --require ts-node/register --reporter=lcov --reporter=text --reporter=text-summary mocha --exit --recursive --timeout=150000 tests/*ts",
     "lint": "eslint . --ext .ts ./",
     "lint-fix": "eslint . --ext .ts ./ --fix",
     "migrate:up": "db-migrate up",
