@@ -1,7 +1,7 @@
 import db from '../db';
 import userQueries from '../db/queries/user.queries';
-import { UserCreateDto } from '../dto/user.dto';
 import { User } from '../models/user.model';
+import { UserCreateDto } from '../utils/dto/user.dto';
 import {
   generateToken,
   hashPassword,
@@ -18,8 +18,12 @@ export const createUser = async (data: UserCreateDto): Promise<User> => {
   return user;
 };
 
+export const findUserByEmail = (email: string) => {
+  return db.oneOrNone<User>(userQueries.findByEmail, email);
+};
+
 const validateUser = async (email: string): Promise<User> => {
-  const user = await db.oneOrNone<User>(userQueries.findByEmail, email);
+  const user = await findUserByEmail(email);
   if (!user) {
     throw ApiError('Invalid credentials', 400);
   }

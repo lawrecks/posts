@@ -15,6 +15,11 @@ export default {
     WHERE users.email = $1
   `,
 
+  findById: `
+    SELECT * FROM users
+    WHERE users.id = $1
+  `,
+
   findAll: `
     SELECT 
     first_name,
