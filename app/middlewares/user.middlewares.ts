@@ -28,12 +28,12 @@ export const checkIfUserExists = async (
 
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const bearerToken = req.header('Authorization');
-    if (!bearerToken) {
+    const token = req.header('Authorization');
+    if (!token) {
       throw ApiError('Access denied, a valid access token is required', 401);
     }
     try {
-      jwt.verify(bearerToken, config.JWT_SECRET);
+      jwt.verify(token, config.JWT_SECRET);
     } catch (e) {
       throw ApiError('Invalid token', 401);
     }
