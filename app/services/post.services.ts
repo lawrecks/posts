@@ -7,7 +7,7 @@ export const createPost = async (data: PostCreateDto): Promise<Post> => {
   const { user_id: userId, title, description, content } = data;
   const payload = [userId, title, description, content];
 
-  return db.query<Post>(postQueries.createPost, payload);
+  return db.one<Post>(postQueries.createPost, payload);
 };
 
 export const getAllPosts = async (userId: string): Promise<Post[]> => {

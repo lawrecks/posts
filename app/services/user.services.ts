@@ -14,7 +14,7 @@ export const createUser = async (data: UserCreateDto): Promise<User> => {
   const hashedPassword = hashPassword(password);
   const payload = [firstName, lastName, email, hashedPassword];
 
-  return db.query<User>(userQueries.createUser, payload);
+  return db.one<User>(userQueries.createUser, payload);
 };
 
 export const findUserByEmail = (email: string) => {

@@ -10,18 +10,27 @@ describe('User middleware', () => {
   let next: sinon.SinonStub;
 
   beforeEach(() => {
-    req = { body: {} };
+    req = { body: {}, params: {} };
     res = { json: sinon.stub(), status: sinon.stub().returnsThis() };
     next = sinon.stub();
   });
 
   it('should call checkIfUserExists function', async () => {
-    await middleware.checkIfUserExists(req as Request, res as Response, next as NextFunction);
+    await middleware.checkIfUserExists(
+      req as Request,
+      res as Response,
+      next as NextFunction,
+    );
     expect(res.status.calledOnce).to.equal(false);
   });
 
   it('should call verifyToken function', async () => {
     middleware.verifyToken(req as Request, res as Response, next as NextFunction);
+    expect(res.status.calledOnce).to.equal(false);
+  });
+
+  it('should call validateUserId function', async () => {
+    middleware.validateUserId(req as Request, res as Response, next as NextFunction);
     expect(res.status.calledOnce).to.equal(false);
   });
 });

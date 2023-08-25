@@ -107,7 +107,6 @@ describe('User', () => {
         .get('/api/v1/users')
         .set('Accept', 'application/json')
         .set('Authorization', `${process.env.USER_TOKEN}invalid`)
-        .send(user)
         .end((req, res) => {
           expect(res.statusCode).to.be.equal(401);
           expect(res.body.code).to.be.equal(401);
@@ -120,7 +119,6 @@ describe('User', () => {
       request(app)
         .get('/api/v1/users')
         .set('Accept', 'application/json')
-        .send(user)
         .end((req, res) => {
           expect(res.statusCode).to.be.equal(401);
           expect(res.body.code).to.be.equal(401);
@@ -134,7 +132,6 @@ describe('User', () => {
         .get('/api/v1/users')
         .set('Accept', 'application/json')
         .set('Authorization', `${process.env.USER_TOKEN}`)
-        .send(user)
         .end((req, res) => {
           expect(res.statusCode).to.be.equal(200);
           expect(res.body.code).to.be.equal(200);
