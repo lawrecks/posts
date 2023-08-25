@@ -12,3 +12,11 @@ export const validateCreateUser = (req: Request, res: Response, next: NextFuncti
   });
   baseValidator(schema, req, res, next, 'body');
 };
+
+export const validateLogin = (req: Request, res: Response, next: NextFunction) => {
+  const schema = Joi.object({
+    email: Joi.string().trim().required(),
+    password: Joi.string().trim().required(),
+  });
+  baseValidator(schema, req, res, next, 'body');
+};

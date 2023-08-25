@@ -20,6 +20,6 @@ export const checkIfUserExists = async (
   } catch (error) {
     logger.error('checkIfUserExists::userMiddleware', error);
 
-    next(error);
+    return next(error);
   }
 };

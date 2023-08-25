@@ -2,7 +2,10 @@ import { Router, Request, Response } from 'express';
 
 import * as userController from '../../controllers/user.controllers';
 import { checkIfUserExists } from '../../middlewares/user.middlewares';
-import { validateCreateUser } from '../../utils/validators/user.validators';
+import {
+  validateCreateUser,
+  validateLogin,
+} from '../../utils/validators/user.validators';
 
 const router = Router();
 
@@ -15,5 +18,6 @@ router.get('/', (req: Request, res: Response) => {
 });
 
 router.post('/users', validateCreateUser, checkIfUserExists, userController.register);
+router.post('/users/login', validateLogin, userController.login);
 
 export default router;
