@@ -14,4 +14,13 @@ export default {
     SELECT * FROM users
     WHERE users.email = $1
   `,
+
+  findAll: `
+    SELECT 
+    first_name,
+    last_name,
+    email,
+    created_at,
+    updated_at
+    FROM users`,
 };

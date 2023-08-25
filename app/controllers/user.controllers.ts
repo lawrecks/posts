@@ -27,3 +27,15 @@ export const login = async ({ body }: Request, res: Response, next: NextFunction
     return next(error);
   }
 };
+
+export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await service.getAllUsers();
+
+    return successResponse(res, 'Users fetched successfully', 200, users);
+  } catch (error) {
+    logger.error('getAllUsers::userController', error);
+
+    return next(error);
+  }
+};

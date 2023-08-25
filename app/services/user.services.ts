@@ -55,3 +55,7 @@ export const login = async ({ email, password }: { email: string; password: stri
     token,
   };
 };
+
+export const getAllUsers = async (): Promise<User[]> => {
+  return db.any<User>(userQueries.findAll);
+};
