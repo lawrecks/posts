@@ -13,9 +13,8 @@ export const createUser = async (data: UserCreateDto): Promise<User> => {
   const { first_name: firstName, last_name: lastName, email, password } = data;
   const hashedPassword = hashPassword(password);
   const payload = [firstName, lastName, email, hashedPassword];
-  const [user] = await db.any<User>(userQueries.createUser, payload);
 
-  return user;
+  return db.query<User>(userQueries.createUser, payload);
 };
 
 export const findUserByEmail = (email: string) => {
@@ -61,5 +60,5 @@ export const login = async ({ email, password }: { email: string; password: stri
 };
 
 export const getAllUsers = async (): Promise<User[]> => {
-  return db.any<User>(userQueries.findAll);
+  return db.many<User>(userQueries.findAll);
 };

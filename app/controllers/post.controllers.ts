@@ -19,3 +19,19 @@ export const createPost = async (
     return next(error);
   }
 };
+
+export const getAllPosts = async (
+  { params: { id } }: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const posts = await service.getAllPosts(id);
+
+    return successResponse(res, 'Posts fetched successfully', 200, posts);
+  } catch (error) {
+    logger.error('getAllPosts::postController', error);
+
+    return next(error);
+  }
+};

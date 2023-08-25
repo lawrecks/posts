@@ -25,8 +25,11 @@ router.get('/', (req: Request, res: Response) => {
 });
 
 router.post('/users', validateCreateUser, checkIfUserExists, userController.register);
+
 router.post('/users/login', validateLogin, userController.login);
+
 router.get('/users', verifyToken, userController.getAllUsers);
+
 router.post(
   '/users/:id/posts',
   verifyToken,
@@ -34,6 +37,14 @@ router.post(
   validateCreatePost,
   validateUserId,
   postController.createPost,
+);
+
+router.get(
+  '/users/:id/posts',
+  verifyToken,
+  validateParamsId('id'),
+  validateUserId,
+  postController.getAllPosts,
 );
 
 export default router;
