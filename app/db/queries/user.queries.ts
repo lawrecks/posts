@@ -22,7 +22,7 @@ export default {
 
   findAll: `
     SELECT
-    id, 
+    id,
     first_name,
     last_name,
     email,
